@@ -2,18 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { inputSelectAdult, inputSelectChildren } from './input/inputData';
 
 const RoomComponent = props => {
-  const { roomIndex, formStates, setFormStates } = props;
-  const formName = `formRoom${roomIndex}`;
+  const { roomIndex, formName, formStates, setFormStates } = props;
   const [isLocked, toggleIsLocked] = useState(true);
-  const [isChecked, toggleChecked] = useState(false);
 
   useEffect(() => {
-    if (isChecked === true || roomIndex === 0) {
+    if (formStates[formName].checkbox === true) {
       toggleIsLocked(false);
     } else {
       toggleIsLocked(true);
     }
-  }, [isChecked, roomIndex]);
+  }, [formStates, formName]);
 
   const onSelectChange = e => {
     const previousState = { ...formStates };
@@ -28,10 +26,20 @@ const RoomComponent = props => {
           <input
             type="checkbox"
             name={'checkbox'}
-            onClick={e => {
-              toggleChecked(!isChecked);
+            checked={formStates[formName].checkbox}
+            onChange={e => {
+              toggleIsLocked(!e.target.checked);
               const previousState = { ...formStates };
-              previousState[formName][e.target.name] = !isChecked;
+
+              if (e.target.checked) {
+                for (let i = roomIndex; i > -1; i--) {
+                  previousState[`formRoom${i}`][e.target.name] =
+                    e.target.checked;
+                }
+              }
+
+              previousState[`formRoom0`][e.target.name] = true;
+              previousState[formName][e.target.name] = e.target.checked;
               setFormStates(previousState);
             }}
           />
@@ -44,6 +52,7 @@ const RoomComponent = props => {
           <select
             disabled={isLocked}
             name="selectAdult"
+            value={formStates[formName].selectAdult}
             onChange={e => onSelectChange(e)}
           >
             {inputSelectAdult.map(({ value, label }, index) => {
@@ -64,6 +73,7 @@ const RoomComponent = props => {
           <select
             disabled={isLocked}
             name="selectChildren"
+            value={formStates[formName].selectChildren}
             onChange={e => onSelectChange(e)}
           >
             {inputSelectChildren.map(({ value, label }, index) => (

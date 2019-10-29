@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RoomComponent from './RoomComponent';
 
 const App = () => {
-  const roomArray = [...Array(5)].map((_, index) => index);
+  const roomArray = [...Array(4)].map((_, index) => index);
   const initialFormState = {};
   for (let key in roomArray) {
     initialFormState[`formRoom${key}`] = {
@@ -12,7 +12,14 @@ const App = () => {
     };
   }
 
+  if (roomArray.length > 0) {
+    initialFormState.formRoom0.checkbox = true;
+  }
+
   const [formStates, setFormStates] = useState(initialFormState);
+  useEffect(() => {
+    console.log('hey hey hey');
+  }, [formStates]);
 
   const onSubmit = values => {
     console.log('submittedValues', values);
@@ -25,6 +32,7 @@ const App = () => {
           <RoomComponent
             key={index}
             roomIndex={index}
+            formName={`formRoom${index}`}
             formStates={formStates}
             setFormStates={setFormStates}
           />
