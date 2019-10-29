@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import RoomComponent from './RoomComponent';
 
-function App() {
+const App = () => {
+  const roomArray = [...Array(5)].map((_, index) => index);
+  const initialFormState = {};
+  for (let key in roomArray) {
+    initialFormState[`formRoom${key}`] = {
+      checkbox: false,
+      selectAdult: 18,
+      selectChildren: 0,
+    };
+  }
+
+  const [formStates, setFormStates] = useState(initialFormState);
+
+  const onSubmit = values => {
+    console.log('submittedValues', values);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        {roomArray.map((_, index) => (
+          <RoomComponent
+            key={index}
+            roomIndex={index}
+            formStates={formStates}
+            setFormStates={setFormStates}
+          />
+        ))}
+        <div>
+          <button onClick={() => onSubmit(formStates)}>Submit</button>
+        </div>
+      </div>
+      <div>
+        <pre className="json-pre">{JSON.stringify(formStates, null, 2)}</pre>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
