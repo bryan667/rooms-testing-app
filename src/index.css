@@ -5,6 +5,23 @@
   margin-right: 10px;
 }
 
+.room-label-container {
+  padding: 10px;
+  font-weight: bold;
+}
+
+.room-values-container {
+  border: 2px solid #ebebeb;
+}
+
+.room-values-container.white {
+  background-color: white;
+}
+
+.room-values-container.gray {
+  background-color: #ebebeb;
+}
+
 .room-select-box {
   display: inline-block;
   padding: 10px;
@@ -19,4 +36,12 @@
 .text-area {
   vertical-align: top;
   display: inline-block;
+}
+
+.submit-container {
+  padding: 10px;
+}
+
+.submit-container button {
+  padding: 10px;
 }

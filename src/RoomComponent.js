@@ -21,7 +21,7 @@ const RoomComponent = props => {
 
   return (
     <div className="room-component">
-      <div>
+      <div className="room-label-container">
         {roomIndex + 1 === 1 ? null : (
           <input
             type="checkbox"
@@ -46,9 +46,16 @@ const RoomComponent = props => {
         )}
         <label>{`Room ${roomIndex + 1 || ''}`}</label>
       </div>
-      <div>
+      <div
+        className={`room-values-container ${
+          formStates[formName].checkbox ? 'white' : 'gray'
+        }`}
+      >
         <div className="room-select-box">
-          <div>Adults (18+)</div>
+          <div>
+            <div>Adults</div>
+            <div>(18+)</div>
+          </div>
           <select
             disabled={isLocked}
             name="selectAdult"
@@ -69,7 +76,10 @@ const RoomComponent = props => {
           </select>
         </div>
         <div className="room-select-box">
-          <div>Children (0-17)</div>
+          <div>
+            <div>Children</div>
+            <div>(0-17)</div>
+          </div>
           <select
             disabled={isLocked}
             name="selectChildren"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import RoomComponent from './RoomComponent';
 
 const App = () => {
@@ -17,9 +17,6 @@ const App = () => {
   }
 
   const [formStates, setFormStates] = useState(initialFormState);
-  useEffect(() => {
-    console.log('hey hey hey');
-  }, [formStates]);
 
   const onSubmit = values => {
     console.log('submittedValues', values);
@@ -37,7 +34,7 @@ const App = () => {
             setFormStates={setFormStates}
           />
         ))}
-        <div>
+        <div className="submit-container">
           <button onClick={() => onSubmit(formStates)}>Submit</button>
         </div>
       </div>
